@@ -16,6 +16,11 @@ import android.view.View;
 public class GuaGuaKa extends View {
 
     /**
+     * 刮掉的百分比
+     */
+    private static final int PERCENTAGE = 50;
+
+    /**
      * 绘制线条的Paint,即用户手指绘制Path
      */
     private Paint mOutterPaint = new Paint();
@@ -37,6 +42,8 @@ public class GuaGuaKa extends View {
     private int mLastX;
     private int mLastY;
 
+    private boolean isComplete = false;
+
     public GuaGuaKa(Context context) {
         this(context, null);
     }
@@ -52,7 +59,7 @@ public class GuaGuaKa extends View {
 
     private void init() {
         mPath = new Path();
-        mBackBitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.back);
+        mBackBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.back);
     }
 
     @Override
@@ -70,12 +77,42 @@ public class GuaGuaKa extends View {
         mCanvas.drawColor(Color.parseColor("#c0c0c0"));
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                mLastX = x;
+                mLastY = y;
+                mPath.moveTo(mLastX, mLastY);
+                break;
+            case MotionEvent.ACTION_MOVE:
+
+                int dx = Math.abs(x - mLastX);
+                int dy = Math.abs(y - mLastY);
+                if (dx > 3 || dy > 3)
+                    mPath.lineTo(x, y);
+                mLastX = x;
+                mLastY = y;
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                new Thread(mRunnable).start();
+                break;
+        }
+        invalidate();
+        return true;
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(mBackBitmap, 0, 0, null);
-        drawPath();
-        canvas.drawBitmap(mBitmap, 0, 0, null);
+        if (!isComplete) {
+            drawPath();
+            canvas.drawBitmap(mBitmap, 0, 0, null);
+        }
     }
 
     private void setOutPaint() {
@@ -97,32 +134,43 @@ public class GuaGuaKa extends View {
         mCanvas.drawPath(mPath, mOutterPaint);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                mLastX = x;
-                mLastY = y;
-                mPath.moveTo(mLastX, mLastY);
-                break;
-            case MotionEvent.ACTION_MOVE:
+    private Runnable mRunnable = new Runnable() {
+        private int[] mPixels;
 
-                int dx = Math.abs(x - mLastX);
-                int dy = Math.abs(y - mLastY);
-
-                if (dx > 3 || dy > 3)
-                    mPath.lineTo(x, y);
-
-                mLastX = x;
-                mLastY = y;
-                break;
+        @Override
+        public void run() {
+            int w = getWidth();
+            int h = getHeight();
+            float wipeArea = 0;
+            float totalArea = w * h;
+            Bitmap bitmap = mBitmap;
+            mPixels = new int[w * h];
+            /**
+             * 拿到全部的像素信息
+             */
+            bitmap.getPixels(mPixels, 0, w, 0, 0, w, h);
+            /**
+             * 遍历统计擦除的区域
+             */
+            for (int i = 0; i < w; i++) {
+                for (int j = 0; j < h; j++) {
+                    int index = i + j * w;
+                    if (mPixels[index] == 0) {
+                        wipeArea++;
+                    }
+                }
+            }
+            /**
+             * 依据所占百分比。进行一些操作
+             */
+            if (wipeArea > 0 && totalArea > 0) {
+                int percent = (int) (wipeArea * 100 / totalArea);
+                if (percent > PERCENTAGE) {
+                    isComplete = true;
+                }
+            }
+            postInvalidate();
         }
 
-        invalidate();
-        return true;
-    }
-
+    };
 }
