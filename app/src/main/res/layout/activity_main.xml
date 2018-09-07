@@ -4,14 +4,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/tv_adaptor"
+    <com.test.GuaGuaKa
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:text="hello world"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
