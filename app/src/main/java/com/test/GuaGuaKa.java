@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,7 +75,7 @@ public class GuaGuaKa extends View {
         // 设置画笔
         setOutPaint();
         //绘制这改成
-        mCanvas.drawColor(Color.parseColor("#c0c0c0"));
+        mCanvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.top), null, new Rect(0, 0, width, height), null);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class GuaGuaKa extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(mBackBitmap, 0, 0, null);
+        canvas.drawBitmap(mBackBitmap,null, new Rect(0,0,getWidth(),getHeight()), null);
         if (!isComplete) {
             drawPath();
             canvas.drawBitmap(mBitmap, 0, 0, null);
