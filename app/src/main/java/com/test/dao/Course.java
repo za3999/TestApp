@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class Course {
+
     @Id
     private long id;
 

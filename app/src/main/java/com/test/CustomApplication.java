@@ -12,14 +12,13 @@ public class CustomApplication extends Application {
     private DaoMaster.DevOpenHelper mHelper;
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
-    public static CustomApplication instances;
+    private static CustomApplication instances;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instances = this;
         setDatabase();
-        mDaoSession.getUserDao().insert(new User(null, "郑小福", "12345"));
     }
 
     /**
@@ -35,4 +34,8 @@ public class CustomApplication extends Application {
         return mDaoSession;
     }
 
+
+    public static CustomApplication getInstances() {
+        return instances;
+    }
 }
