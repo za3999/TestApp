@@ -50,6 +50,10 @@ public class MusicAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public List<Music> getMusics() {
+        return new ArrayList<>(mMusics);
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
