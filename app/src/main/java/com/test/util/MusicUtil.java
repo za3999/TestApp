@@ -64,14 +64,24 @@ public class MusicUtil {
         return bitrate;
     }
 
+    /**
+     * 是否存在高品质的音乐
+     *
+     * @param bitrates
+     * @return
+     */
     public static boolean existHqBitrate(ArrayList<String> bitrates) {
-        return !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL - 1))
-                || !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL - 2))
-                || !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL - 3));
+        return !CONSTANT.BITRATE_LEVELS[0].equals(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL));
     }
 
+    /**
+     * 是否存在无损的音乐
+     *
+     * @param bitrates
+     * @return
+     */
     public static boolean existSqBitrate(ArrayList<String> bitrates) {
-        return !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL));
+        return bitrates.contains(CONSTANT.BITRATE_LEVELS[CONSTANT.MAX_BITRATE_LEVEL]);
     }
 
 }
