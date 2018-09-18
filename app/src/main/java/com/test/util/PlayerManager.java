@@ -50,13 +50,13 @@ public class PlayerManager {
         if (DownloadUtil.isMusicExist(music.mTitle, music.mArtist)) {
             PlayerManager.getInstance().start(music.mTitle, DownloadUtil.getMusicPath(music.mTitle, music.mArtist));
         } else {
-            MusicModel.getMusicFile(Long.parseLong(music.mId), music.bitrates.get(music.bitrates.size() - 1),
+            MusicModel.getMusicFile(Long.parseLong(music.mId), MusicUtil.getBitrate(music.bitrates, MusicUtil.CONSTANT.MAX_BITRATE_LEVEL - 1),
                     MusicManager.TYPE_LISTEN, new BaseObserver<MusicFile>() {
-                        @Override
-                        public void onNext(MusicFile musicFile) {
-                            PlayerManager.getInstance().start(musicFile.mTitle, musicFile.mFileLink);
-                        }
-                    });
+                @Override
+                public void onNext(MusicFile musicFile) {
+                    PlayerManager.getInstance().start(musicFile.mTitle, musicFile.mFileLink);
+                }
+            });
         }
     }
 

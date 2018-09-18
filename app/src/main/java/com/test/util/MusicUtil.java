@@ -9,12 +9,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.test.MusicApplication;
+import com.ting.music.onlinedata.MusicManager;
+
+import java.util.ArrayList;
 
 public class MusicUtil {
 
     public static class CONSTANT {
         public static final int SEARCH_PAGE = 1;
         public static final int SEARCH_LIMIT = 20;
+        public static final int MAX_BITRATE_LEVEL = 4;
+        public static String[] BITRATE_LEVELS = new String[]{MusicManager.BITRATE_128K, MusicManager.BITRATE_192K,
+                MusicManager.BITRATE_256K, MusicManager.BITRATE_320K, MusicManager.BITRATE_FLAC};
+
     }
 
     public static String getDeviceId(Context context) {
@@ -26,9 +33,33 @@ public class MusicUtil {
         return imei;
     }
 
-    public static void hideSoftInput(View view){
+    public static void hideSoftInput(View view) {
         InputMethodManager imm = (InputMethodManager) MusicApplication.getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * 根据level获取音频质量
+     *
+     * @param bitrates
+     * @param level
+     * @return
+     */
+    public static String getBitrate(ArrayList<String> bitrates, int level) {
+
+        if (bitrates == null || bitrates.size() <= 0) {
+            return "";
+        }
+
+        String bitrate = bitrates.get(0);
+        level = level > CONSTANT.MAX_BITRATE_LEVEL ? CONSTANT.MAX_BITRATE_LEVEL : level;
+        level = level < 0 ? 0 : level;
+        for (int i = level; i >= 0; i--) {
+            if (bitrates.contains(CONSTANT.BITRATE_LEVELS[i])) {
+                bitrate = CONSTANT.BITRATE_LEVELS[i];
+                break;
+            }
+        }
+        return bitrate;
+    }
 }

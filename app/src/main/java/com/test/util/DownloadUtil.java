@@ -20,11 +20,15 @@ public class DownloadUtil {
         return new File(getDownloadBaseFile(), getFileName(title, artist)).getPath();
     }
 
-    private static String getFileName(String title, String artist) {
+    public static String getFileName(String title, String artist) {
         return title + "_" + artist + ".mp3";
     }
 
-    public static long download(String url, String title, String artist) {
+    public static String getFileName(String title, String artist,String bitrate) {
+        return title + "_" + artist + "_" + bitrate +".mp3";
+    }
+
+    public static long download(String url, String fileName) {
         long downloadId = -1;
         if (url != null) {
             Uri uri = Uri.parse(url);
@@ -33,9 +37,9 @@ public class DownloadUtil {
             request.setMimeType(getMimeTYpe(url));
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
             request.setVisibleInDownloadsUi(false);
-            Uri fileUri = Uri.withAppendedPath(Uri.fromFile(getDownloadBaseFile()), getFileName(title, artist));
+            Uri fileUri = Uri.withAppendedPath(Uri.fromFile(getDownloadBaseFile()), fileName);
             request.setDestinationUri(fileUri);
-            request.setTitle(title);
+            request.setTitle(fileName);
             DownloadManager downloadManager = (DownloadManager) MusicApplication.getApplication().getSystemService(Context.DOWNLOAD_SERVICE);
             downloadId = downloadManager.enqueue(request);
         }
