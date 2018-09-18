@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -62,4 +63,15 @@ public class MusicUtil {
         }
         return bitrate;
     }
+
+    public static boolean existHqBitrate(ArrayList<String> bitrates) {
+        return !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL - 1))
+                || !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL - 2))
+                || !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL - 3));
+    }
+
+    public static boolean existSqBitrate(ArrayList<String> bitrates) {
+        return !TextUtils.isEmpty(getBitrate(bitrates, CONSTANT.MAX_BITRATE_LEVEL));
+    }
+
 }

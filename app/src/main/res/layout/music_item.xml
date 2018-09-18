@@ -2,15 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_gravity="center_vertical"
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/name"
@@ -19,13 +18,24 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp" />
 
+        <ImageView
+            android:id="@+id/bitrate_im"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/name"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="2dp" />
-    </LinearLayout>
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/bitrate_im" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/download"
@@ -33,5 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="2dp"
         android:text="下载" />
 </LinearLayout>
