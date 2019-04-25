@@ -13,7 +13,7 @@ public class DimenTool {
     static String outPutPath = "D:/base/TestApp/app/src/main/res/";
 
     public static void gen(String name, float scaling) {
-        File file = new File("D:/base/TestApp/app/src/main/res/values/dimens.xml");
+        File file = new File("D:/base/TestApp/app/src/main/res//values/dimens.xml");
         System.out.println("输出文件路径：" + outPutPath);
         BufferedReader reader = null;
         StringBuilder result = new StringBuilder();
