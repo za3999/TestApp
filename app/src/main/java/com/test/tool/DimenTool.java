@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 
 public class DimenTool {
 
@@ -31,12 +32,11 @@ public class DimenTool {
                     String start = tempString.substring(0, tempString.indexOf(">") + 1);
                     String end = tempString.substring(tempString.lastIndexOf("<") - endIndex);
                     //cut down the value in dimen tag
-                    double num = Double.parseDouble
-                            (tempString.substring(tempString.indexOf(">") + 1,
-                                    tempString.indexOf("</dimen>") - endIndex));
-
-                    //depending different size,calculate new value, Joining together new string
-                    result.append(start).append((int) Math.floor(num * scaling + 0.5)).append(end).append("\r\n");
+                    String numStr = tempString.substring(tempString.indexOf(">") + 1, tempString.indexOf("</dimen>") - endIndex);
+                    double num = Double.parseDouble(numStr);
+                    DecimalFormat df = new DecimalFormat(numStr.contains(".") ? "0.0" : "0");
+                    result.append(start).append(df.format(num * scaling)).append(end).append("\r\n");
+//                        result.append(start).append((int) Math.floor(num * scaling + 0.5)).append(end).append("\r\n");
                 } else {
                     result.append(tempString).append("");
                 }
@@ -107,5 +107,6 @@ public class DimenTool {
 
     public static void main(String[] args) {
         gen("values-sw420dp", 7f / 6f);
+        gen("values-sw480dp", 4f / 3f);
     }
 }
