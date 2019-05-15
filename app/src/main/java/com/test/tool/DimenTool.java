@@ -34,7 +34,7 @@ public class DimenTool {
                     //cut down the value in dimen tag
                     String numStr = tempString.substring(tempString.indexOf(">") + 1, tempString.indexOf("</dimen>") - endIndex);
                     double num = Double.parseDouble(numStr);
-                    DecimalFormat df = new DecimalFormat(numStr.contains(".") ? "0.0" : "0");
+                    DecimalFormat df = new DecimalFormat(numStr.contains(".") ? "#.##" : "0");
                     result.append(start).append(df.format(num * scaling)).append(end).append("\r\n");
 //                        result.append(start).append((int) Math.floor(num * scaling + 0.5)).append(end).append("\r\n");
                 } else {

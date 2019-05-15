@@ -142,7 +142,7 @@
     <dimen name="common_margin_left_right">15dp</dimen>
     <dimen name="common_btn_text_font">15sp</dimen>
     <dimen name="split_size">2px</dimen>
-    <dimen name="text_bold_stroke_with">0.5dp</dimen>
+    <dimen name="text_bold_stroke_with">0.3dp</dimen>
 
     <dimen name="common_item_title_margin_top">25dp</dimen>
     <dimen name="common_item_title_margin_bottom">6dp</dimen>
