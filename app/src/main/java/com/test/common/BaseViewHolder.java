@@ -8,12 +8,14 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
 
     protected int position;
     protected BaseCallBack.CallBack3<Integer, View, T> itemClick;
+    private BaseCallBack.CallBack3<Integer, View, T> itemLongClick;
     protected T itemData;
 
     public BaseViewHolder(View view) {
         super(view);
         initView(view);
         itemView.setOnClickListener(v -> onItemClick(position, itemView, itemData));
+        setLongClickListener();
     }
 
     public BaseViewHolder(View view, boolean itemClickEnable) {
@@ -21,6 +23,20 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         initView(view);
         if (itemClickEnable) {
             itemView.setOnClickListener(v -> onItemClick(position, itemView, itemData));
+        }
+        setLongClickListener();
+    }
+
+    public void setItemLongClick(BaseCallBack.CallBack3<Integer, View, T> itemLongClick) {
+        this.itemLongClick = itemLongClick;
+    }
+
+    private void setLongClickListener() {
+        if (itemLongClick != null) {
+            itemView.setOnLongClickListener(v -> {
+                itemLongClick.onCallBack(position, itemView, itemData);
+                return false;
+            });
         }
     }
 

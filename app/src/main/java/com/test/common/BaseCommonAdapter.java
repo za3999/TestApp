@@ -14,6 +14,11 @@ public abstract class BaseCommonAdapter<T> extends RecyclerView.Adapter<BaseView
 
     protected List<T> result = new ArrayList();
     protected BaseCallBack.CallBack3<Integer, View, T> mItemClickListener = (position, v, item) -> onItemClick(position, v, item);
+    protected BaseCallBack.CallBack3<Integer, View, T> mItemLongClickListener = (position, v, item) -> onItemLongClick(position, v, item);
+
+    public void setItemLongClickListener(BaseCallBack.CallBack3<Integer, View, T> itemClickListener) {
+        this.mItemLongClickListener = itemClickListener;
+    }
 
     public void setItemClickListener(BaseCallBack.CallBack3<Integer, View, T> itemClickListener) {
         this.mItemClickListener = itemClickListener;
@@ -22,6 +27,9 @@ public abstract class BaseCommonAdapter<T> extends RecyclerView.Adapter<BaseView
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.onBindData(result.get(position), mItemClickListener, position);
+        if (mItemLongClickListener != null) {
+            holder.setItemLongClick(mItemLongClickListener);
+        }
     }
 
     @Override
@@ -62,6 +70,10 @@ public abstract class BaseCommonAdapter<T> extends RecyclerView.Adapter<BaseView
     }
 
     public void onItemClick(int position, View v, T item) {
+
+    }
+
+    public void onItemLongClick(int position, View v, T item) {
 
     }
 }
