@@ -12,10 +12,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     protected T itemData;
 
     public BaseViewHolder(View view) {
-        super(view);
-        initView(view);
-        itemView.setOnClickListener(v -> onItemClick(position, itemView, itemData));
-        setLongClickListener();
+        this(view, true);
     }
 
     public BaseViewHolder(View view, boolean itemClickEnable) {
