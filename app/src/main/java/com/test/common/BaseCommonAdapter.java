@@ -1,5 +1,6 @@
 package com.test.common;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public abstract class BaseCommonAdapter<T> extends RecyclerView.Adapter<BaseView
     }
 
     @Override
+    @CallSuper
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.onBindData(result.get(position), mItemClickListener, position);
         if (mItemLongClickListener != null) {
