@@ -1,8 +1,8 @@
 package com.test;
 
-import androidx.lifecycle.LifecycleOwner;
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -16,14 +16,14 @@ import java.util.concurrent.TimeUnit;
 
 public class Test {
 
-    public static void testWorker(LifecycleOwner owner) {
+    public static void testWorker(LifecycleOwner lifecycleOwner) {
         WorkManager.getInstance().cancelAllWork();
         Constraints myConstraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         Data data = new Data.Builder().putString("key", "testWork").build();
         //只执行一次的Work
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(TestWorker.class)
                 .setInputData(data).setInitialDelay(5, TimeUnit.SECONDS).setConstraints(myConstraints).build();
-        WorkManager.getInstance().getWorkInfoByIdLiveData(request.getId()).observe(owner, workInfo -> {
+        WorkManager.getInstance().getWorkInfoByIdLiveData(request.getId()).observe(lifecycleOwner, workInfo -> {
             if (WorkInfo.State.SUCCEEDED == workInfo.getState()) {
                 Log.d("test", "dowork success:" + Thread.currentThread().getName());
             }
