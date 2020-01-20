@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void testJetPack(View view) {
         Test.testWorker(this);
+        Test.roomTest();
     }
 
 }

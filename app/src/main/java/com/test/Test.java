@@ -1,8 +1,11 @@
 package com.test;
 
+import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
+import androidx.room.Room;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -10,6 +13,9 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.test.Jetpack.room.AppDatabase;
+import com.test.Jetpack.room.User;
+import com.test.Jetpack.room.UserDao;
 import com.test.Jetpack.workmanager.TestWorker;
 
 import java.util.concurrent.TimeUnit;
@@ -49,5 +55,11 @@ public class Test {
 //        WorkContinuation c2 = WorkManager.getInstance().beginWith(requestB).then(requestD);
 //        WorkContinuation c = WorkContinuation.combine(Arrays.asList(c1, c2)).then(requestE);
 //        c.enqueue();
+    }
+
+    public static void roomTest() {
+        UserDao userDao = BaseApplication.getApplication().getAppDatabase().userDao();
+        userDao.insertAll(new User("郑", "小才"));
+        Log.d("test", "result:" + userDao.getAll());
     }
 }
