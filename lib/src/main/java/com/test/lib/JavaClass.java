@@ -59,7 +59,46 @@ public class JavaClass {
         }
         return B;
     }
+
+    //最长回字串（耗时）
+    public static String longestPalindrome(String s) {
+        int length = s.length();
+        int max = 0;
+        String result = "";
+        int k;
+        if (length == 1) {
+            return s;
+        }
+        for (int i = 0; i < length; i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    k = (i - j) / 2;
+                    boolean match = true;
+                    for (int step = 0; step <= k; step++) {
+                        if (i - step <= j + step) {
+                            break;
+                        }
+                        if (s.charAt(i - step) != s.charAt(j + step)) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match && max < i - j + 1) {
+                        max = i - j + 1;
+                        result = s.substring(j, i + 1);
+                        break;
+                    }
+                } else if (max < 1) {
+                    max = 1;
+                    result = s.charAt(i) + "";
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
-        System.out.println("test:" + trailingZeros(11));
+        String s = "acaa";
+        System.out.println("test:" + longestPalindrome(s));
     }
 }
