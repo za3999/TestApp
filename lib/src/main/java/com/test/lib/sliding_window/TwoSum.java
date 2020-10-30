@@ -1,4 +1,4 @@
-package com.test.lib;
+package com.test.lib.sliding_window;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.test.lib;
+package com.test.lib.dynamic_programming;
 
 /**
  * 最长升序，动态规划

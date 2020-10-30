@@ -1,4 +1,4 @@
-package com.test.lib;
+package com.test.lib.recursion;
 
 import java.util.ArrayList;
 import java.util.Collections;
