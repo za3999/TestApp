@@ -1,6 +1,9 @@
 package com.test.lib;
 
-public class Test1 {
+/**
+ * 最长升序，动态规划
+ */
+public class LengthOfLIS {
 
     public static int lengthOfLIS(int[] nums) {
         int[] array = new int[nums.length];

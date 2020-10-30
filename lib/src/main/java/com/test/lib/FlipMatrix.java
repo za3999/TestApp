@@ -1,8 +1,11 @@
 package com.test.lib;
 
+/**
+ *  矩阵翻转
+ */
 public class FlipMatrix {
 
-    public static int[][] transpose(int[][] A) {
+    public static int[][] transposeMatrix(int[][] A) {
         int iL = A.length;
         int jL = A[0].length;
         int[][] B = new int[jL][iL];
