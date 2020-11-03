@@ -14,7 +14,7 @@ package com.test.lib.dynamic_programming;
  * 输入: "cbbd"
  * 输出: "bb"
  */
-public class longestPalindrome {
+public class LongestPalindrome {
 
     public static String longestPalindrome(String s) {
         int length = s.length();
