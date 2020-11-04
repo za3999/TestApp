@@ -1,5 +1,10 @@
 package com.test.lib.divide_and_conquer;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+
 /**
  * 概念
  * <p>
@@ -47,7 +52,7 @@ package com.test.lib.divide_and_conquer;
  * <p>
  * 问题描述：
  *   有1，2，3，4个数，问你有多少种排列方法，并输出排列。
- *
+ * <p>
  * 问题分析：
  * 若采用分治思想进行求解，首先需要把大问题分解成很多的子问题，大问题是所有的排列方法。
  * 那么我们分解得到的小问题就是以 1 开头的排列，以 2 开头的排列，以 3 开头的排列，以 4 开头的排列。
@@ -58,8 +63,12 @@ package com.test.lib.divide_and_conquer;
 public class AA_remark {
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5};
+        int[] arr = {1, 2, 3};
         fullSort(arr, 0, arr.length - 1);
+        List<List<Integer>> result = fullSort(arr);
+        for (List<Integer> integers : result) {
+            System.out.println(integers);
+        }
     }
 
     //全排列问题
@@ -86,6 +95,40 @@ public class AA_remark {
     }
 
 
+    public static List<List<Integer>> fullSort(int[] arr) {
+        List<List<Integer>> res = new ArrayList();
+        int length = arr.length;
+        boolean[] used = new boolean[length];
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(arr, length, 0, path, used, res);
+        return res;
+    }
 
-
+    /**
+     * @param arr    输入的数
+     * @param length 输入数的长度(冗余,避免一直获取长度)
+     * @param deep   遍历深度
+     * @param path   走过的路径
+     * @param used   当前的元素是否用过
+     * @param res    结果集
+     */
+    private static void dfs(int[] arr, int length, int deep, Deque<Integer> path, boolean[] used, List<List<Integer>> res) {
+        if (deep == length) {
+            res.add(new ArrayList<>(path));
+            System.out.println("result:" + path);
+            return;
+        }
+        for (int i = 0; i < length; i++) {
+            if (used[i]) { //如果使用过，忽略
+                continue;
+            }
+            path.addLast(arr[i]);// 加入到路径中
+            used[i] = true; //标记当前已经使用
+            System.out.println("add:" + path);
+            dfs(arr, length, deep + 1, path, used, res); //递归
+            path.removeLast(); //从路径中回退
+            System.out.println("remove:" + path);
+            used[i] = false; // 重置使用状态
+        }
+    }
 }
