@@ -1,4 +1,4 @@
-package com.test.libbacktracking;
+package com.test.lib.libbacktracking;
 
 /**
  * 回溯算法与深度优先遍历
