@@ -19,4 +19,14 @@ public class Util {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+
+    //对数计算公式
+    public static double log(double basement, double n) {
+        return Math.log(n) / Math.log(basement);
+    }
+
+    public static void main(String[] args) {
+        double res = 0 -log(2, 1d/1000d);
+        System.out.println(res);
+    }
 }
