@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class LevelOrder {
 
-    public List<List<Integer>> order(TreeNode root) {
+    public List<List<Integer>> dfsOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        order(root, 0, result);
+        dfsOrder(root, 0, result);
         return result;
     }
 
-    public void order(TreeNode treeNode, int deep, List<List<Integer>> result) {
+    public void dfsOrder(TreeNode treeNode, int deep, List<List<Integer>> result) {
         if (treeNode == null) {
             return;
         }
@@ -26,26 +26,32 @@ public class LevelOrder {
             result.add(deep, new ArrayList<>());
         }
         result.get(deep).add(treeNode.val);
-        order(treeNode.left, deep + 1, result);
-        order(treeNode.right, deep + 1, result);
+        dfsOrder(treeNode.left, deep + 1, result);
+        dfsOrder(treeNode.right, deep + 1, result);
     }
 
-    public List<Integer> order(TreeNode root, List<Integer> result) {
-        if (root == null) {
-            return result;
-        }
+    public List<List<Integer>> bfsOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
         Deque<TreeNode> deque = new ArrayDeque();
-        deque.addLast(root);
-        TreeNode treeNode = deque.pollFirst();
-        while (treeNode != null) {
-            result.add(treeNode.val);
-            if (treeNode.left != null) {
-                deque.addLast(treeNode.left);
+        deque.addFirst(root);
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            if (size == 0) {
+                break;
             }
-            if (treeNode.right != null) {
-                deque.addLast(treeNode.right);
+            TreeNode treeNode;
+            ArrayList<Integer> array = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                treeNode = deque.pollFirst();
+                array.add(treeNode.val);
+                if (treeNode.left != null) {
+                    deque.addLast(treeNode.left);
+                }
+                if (treeNode.right != null) {
+                    deque.addLast(treeNode.right);
+                }
             }
-            treeNode = deque.pollFirst();
+            result.add(array);
         }
         return result;
     }

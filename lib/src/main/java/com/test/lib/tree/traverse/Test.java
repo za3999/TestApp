@@ -2,7 +2,6 @@ package com.test.lib.tree.traverse;
 
 import com.test.lib.tree.TreeNode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
@@ -24,8 +23,8 @@ public class Test {
         treeNode.left.left = new TreeNode(15);
         treeNode.right.right = new TreeNode(7);
 
-        List<List<Integer>> result = new LevelOrder().order(treeNode);
-        System.out.print("层次遍历(带深度):");
+        List<List<Integer>> result = new LevelOrder().dfsOrder(treeNode);
+        System.out.print("层次遍历(深度优先):");
         for (List<Integer> integers : result) {
             System.out.print("[");
             for (Integer integer : integers) {
@@ -33,9 +32,18 @@ public class Test {
             }
             System.out.print("]");
         }
-        System.out.print("\n层次遍历(不带深度):");
-        System.out.println(new LevelOrder().order(treeNode, new ArrayList<>()));
-        System.out.println(new MaxDepth().maxDepth(treeNode));
+        System.out.println();
+       result = new LevelOrder().bfsOrder(treeNode);
+        System.out.print("层次遍历(广度优先):");
+        for (List<Integer> integers : result) {
+            System.out.print("[");
+            for (Integer integer : integers) {
+                System.out.print(integer + " ");
+            }
+            System.out.print("]");
+        }
+        System.out.println();
+        System.out.println("最大深度："+new MaxDepth().maxDepth(treeNode));
     }
 }
 
